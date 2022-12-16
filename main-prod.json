@@ -1,0 +1,211 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "envName": {
+      "value": "prod"
+    },
+    "envHost": {
+      "value": "integration.fabric.nttltd.global.ntt"
+    },
+    "resourceName": {
+      "value": "prod-integration-fabric-nttltd"
+    },
+    "apimSku": {
+      "value": "Basic"
+    },
+    "apimNamedValueFunctionUrlValue": {
+      "value": "https://prod-itsi-func.azurewebsites.net/api"
+    },
+    "apimNamedValueBaseUrlValue": {
+      "value": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod"
+    },
+    "apimNamedValueBaseUrlValue2": {
+      "value": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod"
+    },
+    "apimNamedValueLdcRouterUrlValue": {
+      "value": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/shared/01_p1_LDC_Producer_API"
+    },
+    "apimNamedValueEdcRouterUrlValue": {
+      "value": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/shared/01_p1_EDC_Producer_API"
+    },
+    "apimOAuth": {
+      "value": [
+        {
+          "name": "brookfield",
+          "backendName": "snaplogic-base-url-2",
+          "path": "/AM/Brookfield_Tasks/Brookfield_Producer_API",
+          "vaultKey": "snaplogic-token-brookfield",
+          "aud": "0cc87928-94f9-4be1-a8ac-b8571b356e60",
+          "oid": "b70da147-d74b-468e-85e5-efaf39637031"
+        }
+      ]
+    },
+    "apimBlueGreen": {
+      "value": [
+        {
+          "name": "DF-Angora-EU",
+          "tags": [
+            "df-angora-eu",
+            "angora-eu"
+          ],
+          "backends": [
+            {
+              "name": "df-angora-eu-in-incident",
+              "path": "inIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-EU_Blue/HubToAngoraUltraTask",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-EU_Green/HubToAngoraUltraTask"
+            },
+            {
+              "name": "df-angora-eu-in-request",
+              "path": "inRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-EU_Blue/HubToAngoraUltraTask",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-EU_Green/HubToAngoraUltraTask"
+            },
+            {
+              "name": "df-angora-eu-out-incident",
+              "path": "outIncident",
+              "blueUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-EU_to_HUB_Blue/01_p0_AngoraOutbound_MsgOrchestrator_Task",
+              "greenUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-EU_to_HUB_Green/01_p0_AngoraOutbound_MsgOrchestrator_Task"
+            },
+            {
+              "name": "df-angora-eu-out-request",
+              "path": "outRequest",
+              "blueUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-EU_to_HUB_Blue/01_p0_AngoraOutbound_MsgOrchestrator_Task",
+              "greenUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-EU_to_HUB_Green/01_p0_AngoraOutbound_MsgOrchestrator_Task"
+            }
+          ]
+        },
+        {
+          "name": "DF-Angora-AP",
+          "tags": [ "df-angora-ap", "angora-ap" ],
+          "backends": [
+            {
+              "name": "df-angora-ap-in-incident",
+              "path": "inIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-AP_Blue/HubToAngoraAPUltraTask",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-AP_Green/HubToAngoraAPUltraTask"
+            },
+            {
+              "name": "df-angora-ap-in-request",
+              "path": "inRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-AP_Blue/HubToAngoraAPUltraTask",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/HUB_to_Angora-AP_Green/HubToAngoraAPUltraTask"
+            },
+            {
+              "name": "df-angora-ap-out-incident",
+              "path": "outIncident",
+              "blueUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-AP_to_HUB_Blue/01_p0_AngoraAPOutbound_MsgOrchestrator_Task",
+              "greenUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-AP_to_HUB_Green/01_p0_AngoraAPOutbound_MsgOrchestrator_Task"
+            },
+            {
+              "name": "df-angora-ap-out-request",
+              "path": "outRequest",
+              "blueUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-AP_to_HUB_Blue/01_p0_AngoraAPOutbound_MsgOrchestrator_Task",
+              "greenUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/Angora-AP_to_HUB_Green/01_p0_AngoraAPOutbound_MsgOrchestrator_Task"
+            }
+          ]
+        }, 
+        {
+          "name": "DF-LDC",
+          "tags": [
+            "df-ldc",
+            "ldc"
+          ],
+          "backends": [
+            {
+              "name": "df-ldc-in-incident",
+              "path": "inIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Blue/01_p2_LDCInbound_Incident_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Green/01_p2_LDCInbound_Incident_Task"
+            },
+            {
+              "name": "df-ldc-in-request",
+              "path": "inRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Blue/01_p4_LDCInbound_Request_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Green/01_p4_LDCInbound_Request_Task"
+            },
+            {
+              "name": "df-ldc-out-incident",
+              "path": "outIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Blue/01_p1_LDCOutbound_Incident_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Green/01_p1_LDCOutbound_Incident_Task"
+            },
+            {
+              "name": "df-ldc-out-request",
+              "path": "outRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Blue/01_p3_LDCOutbound_Request_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/LDC_Green/01_p3_LDCOutbound_Request_Task"
+            }
+          ]
+        },
+        {
+          "name": "DF-NTTS",
+          "tags": [
+            "df-ntts",
+            "ntts"
+          ],
+          "backends": [
+            {
+              "name": "df-ntts-in-incident",
+              "path": "inIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Blue/HubToNTTSUltraTask",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Green/HubToNTTSUltraTask"
+            },
+            {
+              "name": "df-ntts-in-request",
+              "path": "inRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Blue/HubToNTTSUltraTask",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed-master/queue/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Green/HubToNTTSUltraTask"
+            },
+            {
+              "name": "df-ntts-out-incident",
+              "path": "outIncident",
+              "blueUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Blue/NTTS-To-Hub-Task",
+              "greenUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Green/NTTS-To-Hub-Task"
+            },
+            {
+              "name": "df-ntts-out-request",
+              "path": "outRequest",
+              "blueUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Blue/NTTS-To-Hub-Task",
+              "greenUrl": "https://elastic.snaplogic.com/api/1/rest/slsched/feed/NTT-LTD-Prod/Fusion/NTTS%20Integrations_Green/NTTS-To-Hub-Task"
+            }
+          ]
+        },
+        {
+          "name": "DF-Thorium",
+          "tags": [
+            "df-thorium",
+            "thorium"
+          ],
+          "backends": [
+            {
+              "name": "df-thorium-in-incident",
+              "path": "inIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Blue/01_p2_ThoriumInbound_Incident_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Green/01_p2_ThoriumInbound_Incident_Task"
+            },
+            {
+              "name": "df-thorium-in-request",
+              "path": "inRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Blue/01_p4_ThoriumInbound_Request_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Green/01_p4_ThoriumInbound_Request_Task"
+            },
+            {
+              "name": "df-thorium-out-incident",
+              "path": "outIncident",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Blue/01_p1_ThoriumOutbound_Incident_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Green/01_p1_ThoriumOutbound_Incident_Task"
+            },
+            {
+              "name": "df-thorium-out-request",
+              "path": "outRequest",
+              "blueUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Blue/01_p3_ThoriumOutbound_Request_Task",
+              "greenUrl": "https://prod-nttltdprod-fm.snaplogic.io/api/1/rest/feed/NTT-LTD-Prod/Fusion/Thorium_Green/01_p3_ThoriumOutbound_Request_Task"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

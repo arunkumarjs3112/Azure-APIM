@@ -1,0 +1,88 @@
+name: Deployment
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy-dev:
+    name: Deploy DEV
+    environment: DEV
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          tenant-id: <tenant-id>
+          client-id: <client-id>
+          subscription-id: <subscription-id>
+      - name: Deploy Infrastructure
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az group create --name "dev-gateway-rg" --location "westeurope"
+            az deployment group create --name "Gateway" --resource-group "dev-gateway-rg" --template-file ./main.bicep --parameters @main-dev.json
+      - name: Run Smoke Test
+        run: |
+          pwsh -File ./smoke-tests.ps1 -BaseUri "https://dev.integration.fabric.nttltd.global.ntt"
+
+  deploy-uat:
+    name: Deploy UAT
+    if: github.event_name != 'pull_request'
+    needs : [ deploy-dev ]
+    environment: UAT
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          tenant-id: <tenant-id>
+          client-id: <client-id>
+          subscription-id: <subscription-id>
+      - name: Deploy Infrastructure
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az group create --name "uat-gateway-rg" --location "westeurope"
+            az deployment group create --name "Gateway" --resource-group "uat-gateway-rg" --template-file ./main.bicep --parameters @main-uat.json
+
+  deploy-prod:
+    name: Deploy PROD
+    if: github.event_name != 'pull_request'
+    needs : [ deploy-uat ]
+    environment: PROD
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          tenant-id: <tenant-id>
+          client-id: <client-id>
+          subscription-id: <subscription-id>
+      - name: Deploy Infrastructure
+        uses: Azure/cli@v1
+        with:
+          inlineScript: |
+            az group create --name "prod-gateway-rg" --location "westeurope"
+            az deployment group create --name "Gateway" --resource-group "prod-gateway-rg" --template-file ./main.bicep --parameters @main-prod.json
+      - name: Run Smoke Test
+        run: |
+          pwsh -File ./smoke-tests.ps1 -BaseUri "https://integration.fabric.nttltd.global.ntt"
